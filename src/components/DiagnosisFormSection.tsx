@@ -10,9 +10,9 @@ const WEBHOOK_URL =
 
 const FATURAMENTO_OPTIONS = [
   { id: 'ate-30k', label: 'Até R$ 30k' },
-  { id: '30k-60k', label: 'De R$ 30k até 60k' },
-  { id: '60k-100k', label: 'R$ 60k até 100k' },
-  { id: '100k+', label: 'R$ 100k +' },
+  { id: '30k-60k', label: 'R$ 30k – 60k' },
+  { id: '60k-100k', label: 'R$ 60k – 100k' },
+  { id: '100k+', label: 'R$ 100k+' },
 ];
 
 const EMPTY_FORM = { nome: '', telefone: '', clinica: '', faturamento: '' };
