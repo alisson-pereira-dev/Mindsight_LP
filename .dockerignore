@@ -1,0 +1,13 @@
+node_modules
+dist
+.git
+.gitignore
+.env*
+!.env.example
+*.log
+package-lock.json
+# originais pesados (os otimizados ficam em src/assets e public)
+src/video_*.mp4
+.aistudio
+README.md
+CLAUDE.md

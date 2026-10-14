@@ -77,3 +77,11 @@ Ordem das seções em `App.tsx`: Hero (dark, foto) → Problema "O Diagnóstico 
 - Alvos de toque (botões/links) com pelo menos 40px de altura.
 - O CTA flutuante some enquanto o formulário (`#diagnostico`) está na tela.
 - Efeitos de hover (blur/pausa do carrossel dos problemas, desaceleração da faixa de números) só valem para `pointerType === 'mouse'`; no toque, o carrossel é arrastável (`touch-action: pan-y`).
+
+## Deploy (VPS / Easypanel)
+
+- O site é estático: `Dockerfile` (multi-stage: `oven/bun` faz o `bun run build`, `nginx:alpine` serve a pasta `dist/`) + `nginx.conf` (gzip, cache longo em `/assets/`, HTML sem cache, fallback para `index.html`, cabeçalhos de segurança). Porta do serviço: **80**.
+- No Easypanel: Fonte → repositório `alisson-pereira-dev/Mindsight_LP`, branch `main`, caminho de build `/`; aba **Build** → *Dockerfile*; aba **Domínios** → porta 80 com HTTPS. Repositório privado: usar a aba **Git** com a chave SSH (deploy key) mostrada pelo Easypanel, ou configurar um token do GitHub.
+- No servidor a URL SSH é `git@github.com:alisson-pereira-dev/Mindsight_LP.git` (o alias `github.com-devpessoal` existe só no `~/.ssh/config` local).
+- `VITE_CONSULTA_WEBHOOK_URL` é variável de **build**: se for trocar o webhook, defina como *Build Argument* no Easypanel e refaça o deploy.
+- Testar localmente: `docker build -t mindsight-lp . && docker run -p 8080:80 mindsight-lp`.
