@@ -5,12 +5,12 @@ interface Stat {
   label: string;
 }
 
-// Números fornecidos pela MindSight (referência da hero). Para incluir novos, basta
-// adicionar itens aqui. NÃO inventar métricas: só valores reais e comprováveis.
+// Informações fornecidas pela MindSight. Para incluir novas, basta adicionar itens aqui.
+// NÃO inventar métricas: só valores reais e comprováveis.
 const stats: Stat[] = [
-  { value: '1.000+', label: 'Vendedores treinados' },
-  { value: 'R$ 57mi+', label: 'Gerados em faturamento' },
-  { value: '500+', label: 'Mentorias comerciais' },
+  { value: '+ 6 Dígitos', label: 'Gerados em faturamento' },
+  { value: 'Centenas', label: 'De vendedores impactados' },
+  { value: '10k até +800k', label: 'Atuação com clínicas que faturam por mês' },
 ];
 
 const StatItem: React.FC<{ item: Stat }> = ({ item }) => (

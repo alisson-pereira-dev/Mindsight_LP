@@ -60,13 +60,13 @@ Ordem das seções em `App.tsx`: Hero (dark, foto) → Problema "O Diagnóstico 
 
 ## Pontos de atenção
 
-- **O formulário envia para um webhook n8n** (`DiagnosisFormSection.handleSubmit`): `POST` `application/x-www-form-urlencoded` (requisição simples, sem preflight CORS) para `https://main-n8n.1smjgn.easypanel.host/webhook/consulta-comercial-clinica` (sobrescrevível com `VITE_CONSULTA_WEBHOOK_URL` em `.env.local`). Campos: `nome`, `telefone`, `telefone_digitos`, `clinica`, `faturamento` (rótulo da faixa ou "Não informado"), `origem`, `pagina`, `enviado_em` e `utm_*` quando existirem na URL. O workflow precisa estar **ativo** e aceitar POST; se o n8n não devolver `Access-Control-Allow-Origin`, o navegador não consegue ler a resposta e o formulário mostra erro (configurar *Allowed Origins (CORS)* no nó Webhook).
+- **O formulário envia para um webhook n8n** (`DiagnosisFormSection.handleSubmit`): `POST` `application/x-www-form-urlencoded` (requisição simples, sem preflight CORS) para `https://main-n8n.1smjgn.easypanel.host/webhook/consulta-comercial-clinica` (sobrescrevível com `VITE_CONSULTA_WEBHOOK_URL` em `.env.local`). Campos: `nome`, `telefone`, `telefone_digitos`, `clinica`, `faturamento` (rótulo da faixa: "Até R$ 30k", "De R$ 30k até 60k", "R$ 60k até 100k", "R$ 100k +" ou "Não informado"), `origem`, `pagina`, `enviado_em` e `utm_*` quando existirem na URL. O workflow precisa estar **ativo** e aceitar POST; se o n8n não devolver `Access-Control-Allow-Origin`, o navegador não consegue ler a resposta e o formulário mostra erro (configurar *Allowed Origins (CORS)* no nó Webhook).
 - Máscara de telefone BR `(XX) 9XXXX-XXXX` fica em `handlePhoneChange`; reutilize se criar outros campos de telefone.
 - `vite.config.ts`: o bloco `hmr`/`watch` ligado a `DISABLE_HMR` é do AI Studio — não alterar.
 - `.env*` é ignorado pelo git (exceto `.env.example`). Não há variável realmente necessária hoje; `GEMINI_API_KEY`/`APP_URL` no `.env.example` são do template.
 - `npm run clean` usa `rm -rf` (não funciona no PowerShell puro; use Git Bash ou apague `dist/` manualmente).
 - Repositório git inicializado na branch `main`. O primeiro commit é um **checkpoint** (estado estável do site antes de novas alterações); para voltar a ele, use `git log` para achar o commit "checkpoint".
-- `StatsSection.tsx` usa só 3 números reais fornecidos (1.000+ vendedores treinados, R$ 57mi+ em faturamento, 500+ mentorias). Não inventar outros: adicionar apenas valores confirmados.
+- `StatsSection.tsx` usa só informações fornecidas pela MindSight ("+ 6 Dígitos gerados em faturamento", "Centenas de vendedores impactados", "clínicas que faturam de 10k até +800k por mês"). Não inventar outras: adicionar apenas valores confirmados.
 - `package-lock.json` foi gerado só para validar o build localmente (`npm install --legacy-peer-deps`); o gerenciador do projeto é o `bun` (`bun.lock`).
 
 ## Mobile (convenções já aplicadas)

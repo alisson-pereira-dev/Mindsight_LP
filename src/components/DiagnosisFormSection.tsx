@@ -9,9 +9,10 @@ const WEBHOOK_URL =
   'https://main-n8n.1smjgn.easypanel.host/webhook/consulta-comercial-clinica';
 
 const FATURAMENTO_OPTIONS = [
-  { id: '30k-80k', label: 'R$ 30k a 80k' },
-  { id: '80k-250k', label: 'R$ 80k a 250k' },
-  { id: '250k+', label: 'Acima de R$ 250k' },
+  { id: 'ate-30k', label: 'Até R$ 30k' },
+  { id: '30k-60k', label: 'De R$ 30k até 60k' },
+  { id: '60k-100k', label: 'R$ 60k até 100k' },
+  { id: '100k+', label: 'R$ 100k +' },
 ];
 
 const EMPTY_FORM = { nome: '', telefone: '', clinica: '', faturamento: '' };
@@ -260,7 +261,7 @@ export const DiagnosisFormSection: React.FC = () => {
                 <label className="block text-xs font-semibold uppercase tracking-wider text-[#94A3B8] mb-2 font-inter">
                   Faixa de faturamento mensal atual
                 </label>
-                <div className="grid grid-cols-3 gap-2">
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
                   {FATURAMENTO_OPTIONS.map((option) => (
                     <button
                       type="button"
