@@ -1,0 +1,16 @@
+Coloque aqui os videos/GIFs das mini entrevistas dos depoimentos.
+
+O nome do arquivo (sem a extensao) define em qual card ele aparece:
+
+  patricia.mp4        -> Dra. Patricia Leite
+  camila.mp4          -> Dra. Camila Vasconcelos
+  gastro.mp4          -> Gastroenterologia
+  clinica-geral.mp4   -> Clinica Geral
+
+Formatos aceitos: .mp4, .webm ou .gif
+Dica: video quadrado (1:1), sem audio ou com audio (sera exibido mudo), de 5 a 15 s,
+ate ~2 MB cada, para a pagina carregar rapido.
+
+Enquanto nao houver arquivo, o quadrado mostra a foto da pessoa com um icone de play.
+Para trocar os ids/nomes, edite a lista `testimonials` em
+src/components/TestimonialsSection.tsx

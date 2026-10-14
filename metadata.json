@@ -1,0 +1,6 @@
+{
+  "name": "MindSight Company | Inteligência Comercial para Clínicas",
+  "description": "Transformamos interesse já gerado em agenda cheia com inteligência comercial e processos de alta conversão para clínicas.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
