@@ -9,8 +9,8 @@ interface Stat {
 // NÃO inventar métricas: só valores reais e comprováveis.
 const stats: Stat[] = [
   { value: '+ 6 Dígitos', label: 'Gerados em faturamento' },
-  { value: 'Centenas', label: 'De vendedores impactados' },
-  { value: '10k até +800k', label: 'Atuação com clínicas que faturam por mês' },
+  { value: '+200', label: 'Vendedores treinados e em operação ativa' },
+  { value: 'Até R$ 800k/mês', label: 'Faturamento das clínicas que atendemos' },
 ];
 
 const StatItem: React.FC<{ item: Stat }> = ({ item }) => (
@@ -54,7 +54,7 @@ export const StatsSection: React.FC = () => {
     };
   }, []);
 
-  // 3 stats per set, repeated to fill any screen width. Two identical sets side by side ->
+  // 3 stats per set, repeated 2x so a set is wider than any screen. Two identical sets side by side ->
   // translateX(-50%) loops seamlessly (pr-* on each set equals the gap between items).
   const renderSet = (key: string) => (
     <div key={key} className="flex items-start gap-20 sm:gap-28 pr-20 sm:pr-28 shrink-0" aria-hidden={key === 'b'}>

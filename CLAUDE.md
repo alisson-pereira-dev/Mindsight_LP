@@ -66,7 +66,7 @@ Ordem das seções em `App.tsx`: Hero (dark, foto) → Problema "O Diagnóstico 
 - `.env*` é ignorado pelo git (exceto `.env.example`). Não há variável realmente necessária hoje; `GEMINI_API_KEY`/`APP_URL` no `.env.example` são do template.
 - `npm run clean` usa `rm -rf` (não funciona no PowerShell puro; use Git Bash ou apague `dist/` manualmente).
 - Repositório git inicializado na branch `main`. O primeiro commit é um **checkpoint** (estado estável do site antes de novas alterações); para voltar a ele, use `git log` para achar o commit "checkpoint".
-- `StatsSection.tsx` usa só informações fornecidas pela MindSight ("+ 6 Dígitos gerados em faturamento", "Centenas de vendedores impactados", "clínicas que faturam de 10k até +800k por mês"). Não inventar outras: adicionar apenas valores confirmados.
+- `StatsSection.tsx` usa só informações fornecidas pela MindSight ("+ 6 Dígitos gerados em faturamento", "+200 vendedores treinados e em operação ativa", "Até R$ 800k/mês — faturamento das clínicas que atendemos"). Não inventar outras: adicionar apenas valores confirmados.
 - `package-lock.json` foi gerado só para validar o build localmente (`npm install --legacy-peer-deps`); o gerenciador do projeto é o `bun` (`bun.lock`).
 
 ## Mobile (convenções já aplicadas)
