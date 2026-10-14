@@ -71,7 +71,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onCtaClick }) => {
   return (
     <section
       ref={containerRef}
-      className="relative min-h-screen flex items-center pt-28 pb-20 overflow-hidden bg-[#020617]"
+      className="relative min-h-[100svh] flex items-center pt-28 pb-20 overflow-hidden bg-[#020617]"
     >
       {/* Background photo: subject anchored to the right, copy sits on the dark left */}
       <div className="absolute inset-0 z-0">
@@ -99,7 +99,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onCtaClick }) => {
           >
             <span className="w-2 h-2 rounded-full bg-[#0DC0E0] animate-pulse" />
             <span className="text-[11px] sm:text-xs font-semibold tracking-wider uppercase text-[#0DC0E0] font-inter">
-              NÃO SOMOS AGÊNCIA • INTELIGÊNCIA COMERCIAL PARA CLÍNICAS
+              INTELIGÊNCIA COMERCIAL PARA CLÍNICAS
             </span>
           </div>
 
@@ -129,7 +129,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onCtaClick }) => {
               onClick={onCtaClick}
               className="group relative inline-flex items-center justify-center gap-3 bg-[#0DC0E0] hover:bg-[#0AA9D1] text-[#020617] font-sora font-bold text-base px-8 py-4 rounded-full transition-all duration-300 transform hover:scale-[1.02] active:scale-[0.98] shadow-[0_8px_30px_rgba(13,192,224,0.45)] cursor-pointer"
             >
-              <span>Quero diagnosticar meu comercial</span>
+              <span>Quero diagnosticar o comercial da minha clínica</span>
               <div className="w-7 h-7 rounded-full bg-[#020617]/10 flex items-center justify-center transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1">
                 <ArrowUpRight className="w-4 h-4 text-[#020617]" />
               </div>

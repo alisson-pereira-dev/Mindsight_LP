@@ -40,16 +40,23 @@ export const DifferentiationSection: React.FC = () => {
               <span className="text-[#0AA9D1]">mais uma agência</span>
             </h2>
 
-            <p className="mt-6 text-base sm:text-lg text-[#64748B] font-inter leading-relaxed">
-              Agências de tráfego são especialistas em gerar interesse. Mas clínicas de alta
-              performance não quebram por falta de interesse — quebram pelo abismo que existe entre
-              a mensagem no WhatsApp e o pagamento da consulta.
-            </p>
-
-            <p className="mt-4 text-base sm:text-lg text-[#64748B] font-inter leading-relaxed">
-              Nós não concorremos com o seu tráfego; nós tornamos o seu tráfego lucrativo. Nós somos
-              a peça comercial que faltava na sua engrenagem.
-            </p>
+            <div className="mt-6 space-y-4 text-base sm:text-lg text-[#64748B] font-inter leading-relaxed">
+              <p>
+                A maioria das empresas entrega lead e vai embora. Deixa o dono sozinho justamente na
+                parte que decide o resultado: o que acontece depois que o paciente demonstra
+                interesse.
+              </p>
+              <p>
+                <strong className="font-sora font-semibold text-[#0F172A]">
+                  A gente faz o contrário. Começa onde as outras param.
+                </strong>
+              </p>
+              <p>
+                É uma especialização dupla e rara: não é agência que atende clínica entre vários
+                nichos, nem consultoria comercial genérica. É comercial de verdade, construído pra
+                realidade de quem toca uma clínica, e integrado com a atração que você já faz.
+              </p>
+            </div>
 
             {/* Anti-agency Callout Banner with dashed #0DC0E0 border */}
             <div className="mt-8 p-6 rounded-2xl bg-white border-2 border-dashed border-[#0DC0E0] shadow-xs relative">
@@ -62,9 +69,9 @@ export const DifferentiationSection: React.FC = () => {
                     Por isso a gente não atende todo mundo.
                   </h4>
                   <p className="mt-1 text-xs sm:text-sm text-[#475569] font-inter leading-relaxed">
-                    Trabalhamos exclusivamente com clínicas que já possuem fluxo ativo de pacientes,
-                    já faturam de forma consistente e entenderam que o próximo nível não é gastar
-                    mais em anúncios, mas sim fechar com maestria.
+                    Antes de qualquer proposta, tem uma consulta comercial: um diagnóstico do seu
+                    comercial pra entender se faz sentido pros dois lados. Se não fizer, a gente fala
+                    na sua cara.
                   </p>
                 </div>
               </div>
@@ -78,6 +85,8 @@ export const DifferentiationSection: React.FC = () => {
               <div className="grid grid-cols-2 text-center border-b border-[#E2E8F0]">
                 {/* Traditional Agency Header */}
                 <div className="p-5 sm:p-6 bg-[#F8FAFC] border-r border-[#E2E8F0]">
+                  {/* spacer: mesma altura do selo "Método" da coluna ao lado */}
+                  <div className="mb-2 h-[18px]" aria-hidden="true" />
                   <span className="text-xs font-semibold text-[#94A3B8] uppercase tracking-wider block font-inter">
                     O Mercado Tradicional
                   </span>
@@ -91,7 +100,7 @@ export const DifferentiationSection: React.FC = () => {
 
                 {/* MindSight Header */}
                 <div className="p-5 sm:p-6 bg-[#E6F9FC]/60 relative">
-                  <div className="absolute top-2 right-3">
+                  <div className="mb-2">
                     <span className="inline-flex items-center gap-1 bg-[#0DC0E0] text-[#020617] text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider">
                       <Zap className="w-3 h-3 fill-current" /> Método
                     </span>
@@ -99,7 +108,7 @@ export const DifferentiationSection: React.FC = () => {
                   <span className="text-xs font-semibold text-[#0AA9D1] uppercase tracking-wider block font-inter">
                     Inteligência Comercial
                   </span>
-                  <div className="font-sora font-bold text-lg sm:text-xl text-[#0F172A] mt-1 flex items-center justify-center gap-1.5">
+                  <div className="font-sora font-bold text-lg sm:text-xl text-[#0F172A] mt-1 flex items-center justify-center">
                     Mind<span className="text-[#0DC0E0]">Sight</span>
                   </div>
                   <p className="text-xs text-[#0AA9D1] mt-1 font-medium font-inter">

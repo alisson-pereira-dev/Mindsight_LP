@@ -36,16 +36,15 @@ src/App.tsx                   # compõe as seções, Lenis<->ScrollTrigger, CTA 
 src/index.css                 # @theme (tokens), utilitários glass/glow, marquee
 src/components/
   Navbar, HeroSection (foto de fundo; HeroCanvas não é mais usado), ProblemSection,
-  LogicPainSection, SolutionSection, DifferentiationSection, TestimonialsSection,
+  LogicPainSection, SolutionSection, QuoteSection, DifferentiationSection, StatsSection,
   DiagnosisFormSection, Footer, Logo (imagem)
 src/assets/                   # logos recortadas (logo-azul/branco, icone-*) usadas pelo Logo e pelo Footer
-src/assets/depoimentos/       # vídeos dos depoimentos (patricia/camila/gastro/clinica-geral .mp4, sem áudio); ver LEIA-ME.txt
 public/                       # favicon.png, favicon-32.png, apple-touch-icon.png
 src/*.jpg|png|mp4             # fotos e vídeos originais enviados pelo cliente (fonte; as versões otimizadas ficam em assets/)
 src/Mindsight-Company-System.html  # guia de design system / brand (consultar para cores e tokens)
 ```
 
-Ordem das seções em `App.tsx`: Hero (dark, foto) → Problema "O Diagnóstico Oculto" (light, carrossel de cards) → Dor lógica "A Conta Que Ninguém Faz" (card dark arredondado sobre fundo `#F8FAFC`) → Solução (scrolltelling pinado, 4 pilares) → Diferenciação → Depoimentos (faixa em marquee com vídeo quadrado) → Diagnóstico (form, dark) → Footer (light). Cada seção que dispara conversão recebe `onCtaClick`/`onResolveClick` do `App`, que faz `scrollIntoView` em `#diagnostico`.
+Ordem das seções em `App.tsx`: Hero (dark, foto) → Problema "O Diagnóstico Oculto" (light, carrossel de cards) → Dor lógica "A Conta Que Ninguém Faz" (card dark arredondado sobre fundo `#F8FAFC`) → Solução (scrolltelling pinado, 4 pilares) → Citação (card dark com foto do Igor) → Diferenciação → Números (faixa em marquee, `StatsSection`) → Diagnóstico (form, dark) → Footer (light). Cada seção que dispara conversão recebe `onCtaClick`/`onResolveClick` do `App`, que faz `scrollIntoView` em `#diagnostico`.
 
 ## Convenções
 
@@ -61,11 +60,20 @@ Ordem das seções em `App.tsx`: Hero (dark, foto) → Problema "O Diagnóstico 
 
 ## Pontos de atenção
 
-- **O formulário não envia dados.** `DiagnosisFormSection.handleSubmit` valida (nome, WhatsApp com ≥10 dígitos, clínica) e apenas simula o envio com `setTimeout` + confete. Antes de ir a produção é preciso integrar um destino real (webhook/CRM/WhatsApp API). O campo `faturamento` existe no estado; confira se está sendo exposto no JSX antes de depender dele.
+- **O formulário envia para um webhook n8n** (`DiagnosisFormSection.handleSubmit`): `POST` `application/x-www-form-urlencoded` (requisição simples, sem preflight CORS) para `https://main-n8n.1smjgn.easypanel.host/webhook/consulta-comercial-clinica` (sobrescrevível com `VITE_CONSULTA_WEBHOOK_URL` em `.env.local`). Campos: `nome`, `telefone`, `telefone_digitos`, `clinica`, `faturamento` (rótulo da faixa ou "Não informado"), `origem`, `pagina`, `enviado_em` e `utm_*` quando existirem na URL. O workflow precisa estar **ativo** e aceitar POST; se o n8n não devolver `Access-Control-Allow-Origin`, o navegador não consegue ler a resposta e o formulário mostra erro (configurar *Allowed Origins (CORS)* no nó Webhook).
 - Máscara de telefone BR `(XX) 9XXXX-XXXX` fica em `handlePhoneChange`; reutilize se criar outros campos de telefone.
 - `vite.config.ts`: o bloco `hmr`/`watch` ligado a `DISABLE_HMR` é do AI Studio — não alterar.
 - `.env*` é ignorado pelo git (exceto `.env.example`). Não há variável realmente necessária hoje; `GEMINI_API_KEY`/`APP_URL` no `.env.example` são do template.
 - `npm run clean` usa `rm -rf` (não funciona no PowerShell puro; use Git Bash ou apague `dist/` manualmente).
 - Repositório git inicializado na branch `main`. O primeiro commit é um **checkpoint** (estado estável do site antes de novas alterações); para voltar a ele, use `git log` para achar o commit "checkpoint".
-- Depoimentos de **Gastroenterologia** e **Clínica Geral** (`TestimonialsSection.tsx` e `ProblemSection.tsx`) têm falas **rascunho**, não reais: substituir por depoimentos autorizados antes de publicar.
+- `StatsSection.tsx` usa só 3 números reais fornecidos (1.000+ vendedores treinados, R$ 57mi+ em faturamento, 500+ mentorias). Não inventar outros: adicionar apenas valores confirmados.
 - `package-lock.json` foi gerado só para validar o build localmente (`npm install --legacy-peer-deps`); o gerenciador do projeto é o `bun` (`bun.lock`).
+
+## Mobile (convenções já aplicadas)
+
+- Testado em 390px e 360px (sem estouro horizontal). Ao criar/alterar seções, manter o `scrollWidth` do documento == largura da tela.
+- **Inputs com `text-base` (16px) no mobile** (`sm:text-sm` no desktop): abaixo de 16px o iOS dá zoom ao focar. Usar `autoComplete`, `inputMode` e `enterKeyHint` nos campos.
+- Altura de tela com `min-h-[100svh]` (não `min-h-screen`), por causa das barras do navegador mobile. `viewport-fit=cover` está no `index.html`; elementos fixos usam `env(safe-area-inset-bottom)`.
+- Alvos de toque (botões/links) com pelo menos 40px de altura.
+- O CTA flutuante some enquanto o formulário (`#diagnostico`) está na tela.
+- Efeitos de hover (blur/pausa do carrossel dos problemas, desaceleração da faixa de números) só valem para `pointerType === 'mouse'`; no toque, o carrossel é arrastável (`touch-action: pan-y`).

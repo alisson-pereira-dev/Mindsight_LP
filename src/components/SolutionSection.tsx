@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ArrowUpRight, Compass, Users2, Cpu, BarChart3, Check } from 'lucide-react';
+import { ArrowUpRight, Compass, Users2, Cpu, BarChart3 } from 'lucide-react';
 
 interface SolutionSectionProps {
   onCtaClick: () => void;
@@ -12,54 +12,30 @@ export const SolutionSection: React.FC<SolutionSectionProps> = ({ onCtaClick }) 
     {
       num: '01',
       title: 'Processo comercial claro',
-      subtitle: 'Padronização de ponta a ponta do funil de atendimento',
       icon: Compass,
       description:
-        'Substituímos o atendimento amador por scripts consultivos sob medida, cadência estratégica de follow-up, quebra de objeções de preço e protocolo de confirmação para eliminar o no-show na raiz.',
-      benefits: [
-        'Scripts testados para consultas particulares e tratamentos',
-        'Cadência de follow-up em 5 etapas para quem parou de responder',
-        'Protocolo anti no-show com confirmação ativa humanizada',
-      ],
+        'Converter deixa de depender do talento ou do dia de uma pessoa. Cada paciente interessado passa a ter um caminho, e nada se perde no meio.',
     },
     {
       num: '02',
       title: 'Equipe que vende',
-      subtitle: 'Treinamento contínuo e desenvolvimento de habilidades comerciais',
       icon: Users2,
       description:
-        'Sua recepcionista não precisa adivinhar como fechar tratamentos. Nós treinamos, alinhamos e acompanhamos o time de atendimento da clínica para agir com postura consultiva, empatia e alta taxa de conversão.',
-      benefits: [
-        'Treinamento prático de vendas na área da saúde',
-        'Alinhamento de tom de voz e postura de autoridade médica',
-        'Auditoria semanal de conversas para evolução contínua',
-      ],
+        'Secretária não é só quem atende. Com método e estrutura, ela vira a maior alavanca de faturamento da clínica.',
     },
     {
       num: '03',
       title: 'Tecnologia e inteligência artificial',
-      subtitle: 'Velocidade de resposta em segundos e triagem inteligente',
       icon: Cpu,
       description:
-        'Implementamos CRM especializado em saúde integrado ao WhatsApp e automações inteligentes com IA. O lead recebe o primeiro contato em menos de 60 segundos, é qualificado e encaminhado sem atrito.',
-      benefits: [
-        'Primeira resposta instantânea com IA humanizada 24/7',
-        'CRM configurado com funil visual por procedimento',
-        'Automação de resgate de pacientes inativos há mais de 6 meses',
-      ],
+        'Automação e IA sustentam o comercial: resposta rápida, nenhum paciente esquecido, cada oportunidade acompanhada, sem depender do esforço de alguém o tempo todo.',
     },
     {
       num: '04',
       title: 'Previsibilidade e dados',
-      subtitle: 'Painel executivo com clareza matemática de cada centavo',
       icon: BarChart3,
       description:
-        'Chega de reuniões de vaidade sobre alcance e cliques. Você terá um painel em tempo real com taxa de conversão por procedimento, CAC real, tempo de resposta e previsão exata de faturamento do próximo mês.',
-      benefits: [
-        'Dashboard gerencial com taxa de conversão real',
-        'Métricas individuais de performance por atendente',
-        'Previsibilidade de faturamento para planejamento de expansão',
-      ],
+        'Você passa a enxergar quem atende, como atende e por que fecha ou não. O comercial sai do escuro e a decisão vira estratégia, não achismo.',
     },
   ];
 
@@ -78,16 +54,15 @@ export const SolutionSection: React.FC<SolutionSectionProps> = ({ onCtaClick }) 
               <span className="text-[#0AA9D1]">Existe estrutura.</span>
             </h2>
 
-            <div className="mt-6 space-y-4 text-base sm:text-lg text-[#64748B] font-inter leading-relaxed">
-              <p>
-                A MindSight não é mais uma agência que promete leads milagrosos para depois culpar
-                sua secretária quando o faturamento não sobe.
-              </p>
-              <p>
-                Nós entramos na operação da sua clínica e construímos os 4 pilares fundamentais de um
-                comercial moderno, previsível e focado em lucro.
-              </p>
-            </div>
+            <p className="mt-6 text-base sm:text-lg text-[#64748B] font-inter leading-relaxed">
+              A MindSight não é mais uma agência.{' '}
+              <strong className="font-semibold text-[#0F172A]">
+                É inteligência comercial para clínicas.
+              </strong>{' '}
+              A gente constrói a estrutura que transforma o interesse que você já gera em
+              agendamento previsível, e devolve pra você o controle do comercial. Sobre quatro
+              pilares.
+            </p>
 
             {/* Quick pillar navigation pills */}
             <div className="mt-8 flex flex-wrap gap-2">
@@ -99,7 +74,7 @@ export const SolutionSection: React.FC<SolutionSectionProps> = ({ onCtaClick }) 
                     const el = document.getElementById(`pilar-${p.num}`);
                     if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
                   }}
-                  className={`text-xs font-semibold px-3 py-1.5 rounded-full transition-all cursor-pointer ${
+                  className={`text-xs font-semibold px-4 min-h-10 rounded-full transition-all cursor-pointer ${
                     activePilar === idx
                       ? 'bg-[#0DC0E0] text-[#020617] shadow-xs'
                       : 'bg-[#F1F5F9] text-[#64748B] hover:bg-[#E2E8F0]'
@@ -156,25 +131,9 @@ export const SolutionSection: React.FC<SolutionSectionProps> = ({ onCtaClick }) 
                     </div>
                   </div>
 
-                  <p className="text-sm font-medium text-[#64748B] mb-4 relative z-10 font-inter">
-                    {pillar.subtitle}
-                  </p>
-
-                  <p className="text-base text-[#334155] leading-relaxed font-inter mb-6 relative z-10">
+                  <p className="text-base sm:text-lg text-[#334155] leading-relaxed font-inter relative z-10">
                     {pillar.description}
                   </p>
-
-                  {/* Benefits checklist */}
-                  <div className="space-y-2.5 pt-4 border-t border-[#F1F5F9] relative z-10">
-                    {pillar.benefits.map((benefit, bIdx) => (
-                      <div key={bIdx} className="flex items-start gap-2.5 text-xs sm:text-sm text-[#475569]">
-                        <div className="w-5 h-5 rounded-full bg-[#E6F9FC] text-[#0AA9D1] flex items-center justify-center shrink-0 mt-0.5">
-                          <Check className="w-3.5 h-3.5 stroke-[2.5]" />
-                        </div>
-                        <span>{benefit}</span>
-                      </div>
-                    ))}
-                  </div>
                 </div>
               );
             })}

@@ -7,8 +7,9 @@ import { HeroSection } from './components/HeroSection.tsx';
 import { ProblemSection } from './components/ProblemSection.tsx';
 import { LogicPainSection } from './components/LogicPainSection.tsx';
 import { SolutionSection } from './components/SolutionSection.tsx';
+import { QuoteSection } from './components/QuoteSection.tsx';
 import { DifferentiationSection } from './components/DifferentiationSection.tsx';
-import { TestimonialsSection } from './components/TestimonialsSection.tsx';
+import { StatsSection } from './components/StatsSection.tsx';
 import { DiagnosisFormSection } from './components/DiagnosisFormSection.tsx';
 import { Footer } from './components/Footer.tsx';
 import { ArrowUpRight } from 'lucide-react';
@@ -17,6 +18,7 @@ gsap.registerPlugin(ScrollTrigger);
 
 export default function App() {
   const [showFloatingCta, setShowFloatingCta] = useState(false);
+  const [formInView, setFormInView] = useState(false);
 
   // Initialize Lenis for buttery smooth scroll
   useEffect(() => {
@@ -50,6 +52,17 @@ export default function App() {
     };
   }, []);
 
+  // The floating CTA is pointless (and covers the form) while the form itself is on screen
+  useEffect(() => {
+    const target = document.getElementById('diagnostico');
+    if (!target) return;
+    const io = new IntersectionObserver(([entry]) => setFormInView(entry.isIntersecting), {
+      threshold: 0.15,
+    });
+    io.observe(target);
+    return () => io.disconnect();
+  }, []);
+
   const scrollToDiagnosis = () => {
     const target = document.getElementById('diagnostico');
     if (target) {
@@ -58,7 +71,7 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-light-bg text-[#0F172A] selection:bg-[#0DC0E0]/20 selection:text-[#0AA9D1] relative">
+    <div className="min-h-[100svh] bg-light-bg text-[#0F172A] selection:bg-[#0DC0E0]/20 selection:text-[#0AA9D1] relative">
       {/* Top Sticky Navigation */}
       <Navbar onCtaClick={scrollToDiagnosis} />
 
@@ -76,11 +89,14 @@ export default function App() {
         {/* 4. A SOLUÇÃO (Pinned Scrolltelling with 4 structural pillars) */}
         <SolutionSection onCtaClick={scrollToDiagnosis} />
 
+        {/* 4.5 CITAÇÃO (div intermediária: foto + frase de posicionamento) */}
+        <QuoteSection />
+
         {/* 5. DIFERENCIAÇÃO (Anti-agency comparison matrix) */}
         <DifferentiationSection />
 
-        {/* 5.5 DEPOIMENTOS (carrossel de cards com foto, nome, cargo, frase e estrelas) */}
-        <TestimonialsSection />
+        {/* 5.5 NÚMEROS (faixa em carrossel infinito, logo acima do formulário) */}
+        <StatsSection />
 
         {/* 6. CTA FINAL + FORMULÁRIO (Linear-style qualification diagnostic) */}
         <DiagnosisFormSection />
@@ -90,13 +106,13 @@ export default function App() {
       <Footer />
 
       {/* Floating CTA for High Conversion on Scroll */}
-      {showFloatingCta && (
-        <div className="fixed bottom-6 right-6 z-40 animate-in fade-in slide-in-from-bottom-4 duration-300">
+      {showFloatingCta && !formInView && (
+        <div className="fixed right-4 sm:right-6 bottom-[max(1rem,env(safe-area-inset-bottom))] sm:bottom-6 z-40 animate-in fade-in slide-in-from-bottom-4 duration-300">
           <button
             onClick={scrollToDiagnosis}
-            className="group flex items-center gap-2.5 bg-[#020617] hover:bg-[#0F172A] text-white border border-[#0DC0E0]/40 px-5 py-3 rounded-full shadow-[0_8px_30px_rgba(13,192,224,0.3)] transition-all duration-300 transform hover:scale-105 active:scale-95 cursor-pointer"
+            className="group flex items-center gap-2.5 bg-[#020617] hover:bg-[#0F172A] text-white border border-[#0DC0E0]/40 px-4 sm:px-5 py-3 rounded-full shadow-[0_8px_30px_rgba(13,192,224,0.3)] transition-all duration-300 transform hover:scale-105 active:scale-95 cursor-pointer"
           >
-            <div className="w-2 h-2 rounded-full bg-[#0DC0E0] animate-ping" />
+            <div className="w-2 h-2 rounded-full bg-[#0DC0E0] animate-ping motion-reduce:animate-none" />
             <span className="font-sora font-semibold text-xs sm:text-sm">Diagnosticar Comercial</span>
             <div className="w-5 h-5 rounded-full bg-[#0DC0E0] text-[#020617] flex items-center justify-center transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5">
               <ArrowUpRight className="w-3.5 h-3.5 stroke-[2.5]" />

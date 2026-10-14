@@ -1,14 +1,23 @@
 import React, { useState } from 'react';
-import { ArrowUpRight, CheckCircle, Clock, ShieldCheck, Sparkles, Building2, User, Phone, Send } from 'lucide-react';
+import { ArrowUpRight, CheckCircle, Clock, Sparkles, Building2, User, Phone, Send } from 'lucide-react';
 import confetti from 'canvas-confetti';
 
+// Webhook (n8n) que recebe os dados do formulário. Pode ser sobrescrito por .env.local:
+// VITE_CONSULTA_WEBHOOK_URL=...
+const WEBHOOK_URL =
+  import.meta.env.VITE_CONSULTA_WEBHOOK_URL ??
+  'https://main-n8n.1smjgn.easypanel.host/webhook/consulta-comercial-clinica';
+
+const FATURAMENTO_OPTIONS = [
+  { id: '30k-80k', label: 'R$ 30k a 80k' },
+  { id: '80k-250k', label: 'R$ 80k a 250k' },
+  { id: '250k+', label: 'Acima de R$ 250k' },
+];
+
+const EMPTY_FORM = { nome: '', telefone: '', clinica: '', faturamento: '' };
+
 export const DiagnosisFormSection: React.FC = () => {
-  const [formData, setFormData] = useState({
-    nome: '',
-    telefone: '',
-    clinica: '',
-    faturamento: '50k-150k',
-  });
+  const [formData, setFormData] = useState(EMPTY_FORM);
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -32,8 +41,9 @@ export const DiagnosisFormSection: React.FC = () => {
     setFormData((prev) => ({ ...prev, telefone: value }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (isSubmitting) return;
     setErrorMsg('');
 
     if (!formData.nome.trim()) {
@@ -51,9 +61,40 @@ export const DiagnosisFormSection: React.FC = () => {
 
     setIsSubmitting(true);
 
-    // Simulate quick diagnosis booking
-    setTimeout(() => {
-      setIsSubmitting(false);
+    // Enviado como application/x-www-form-urlencoded: é uma "requisição simples" (sem preflight
+    // CORS) e o n8n já entrega os campos prontos em `body`.
+    const params = new URLSearchParams(window.location.search);
+    const faixa = FATURAMENTO_OPTIONS.find((o) => o.id === formData.faturamento);
+    const payload = new URLSearchParams({
+      nome: formData.nome.trim(),
+      telefone: formData.telefone,
+      telefone_digitos: formData.telefone.replace(/\D/g, ''),
+      clinica: formData.clinica.trim(),
+      faturamento: faixa?.label ?? 'Não informado',
+      origem: 'landing-page-mindsight',
+      pagina: window.location.href,
+      enviado_em: new Date().toISOString(),
+    });
+    ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term'].forEach((k) => {
+      const v = params.get(k);
+      if (v) payload.set(k, v);
+    });
+
+    const controller = new AbortController();
+    const timeout = window.setTimeout(() => controller.abort(), 15000);
+
+    try {
+      const res = await fetch(WEBHOOK_URL, {
+        method: 'POST',
+        body: payload,
+        signal: controller.signal,
+      });
+      if (!res.ok) {
+        // Inclui o corpo da resposta no log para facilitar o diagnóstico no console
+        const detail = await res.text().catch(() => '');
+        throw new Error(`Webhook respondeu ${res.status}: ${detail.slice(0, 500)}`);
+      }
+
       setIsSubmitted(true);
       confetti({
         particleCount: 80,
@@ -61,7 +102,13 @@ export const DiagnosisFormSection: React.FC = () => {
         origin: { y: 0.6 },
         colors: ['#0DC0E0', '#0AA9D1', '#FFFFFF', '#10B981'],
       });
-    }, 900);
+    } catch (err) {
+      console.error('Falha ao enviar o formulário:', err);
+      setErrorMsg('Não foi possível enviar agora. Confira sua conexão e tente novamente em instantes.');
+    } finally {
+      window.clearTimeout(timeout);
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -123,7 +170,7 @@ export const DiagnosisFormSection: React.FC = () => {
               <button
                 onClick={() => {
                   setIsSubmitted(false);
-                  setFormData({ nome: '', telefone: '', clinica: '', faturamento: '50k-150k' });
+                  setFormData(EMPTY_FORM);
                 }}
                 className="mt-4 text-xs text-[#0DC0E0] hover:underline"
               >
@@ -150,10 +197,13 @@ export const DiagnosisFormSection: React.FC = () => {
                   <input
                     type="text"
                     required
+                    name="nome"
+                    autoComplete="name"
+                    enterKeyHint="next"
                     value={formData.nome}
                     onChange={(e) => setFormData({ ...formData, nome: e.target.value })}
                     placeholder="Ex: Dra. Mariana Costa"
-                    className="w-full pl-10 pr-4 py-3.5 rounded-xl bg-[#1E293B] border border-[#334155] focus:border-[#0DC0E0] focus:ring-1 focus:ring-[#0DC0E0] text-white placeholder-[#64748B] text-sm font-inter transition-all outline-none"
+                    className="w-full pl-10 pr-4 py-3.5 rounded-xl bg-[#1E293B] border border-[#334155] focus:border-[#0DC0E0] focus:ring-1 focus:ring-[#0DC0E0] text-white placeholder-[#64748B] text-base sm:text-sm font-inter transition-all outline-none"
                   />
                 </div>
               </div>
@@ -170,10 +220,14 @@ export const DiagnosisFormSection: React.FC = () => {
                   <input
                     type="tel"
                     required
+                    name="telefone"
+                    autoComplete="tel-national"
+                    inputMode="tel"
+                    enterKeyHint="next"
                     value={formData.telefone}
                     onChange={handlePhoneChange}
                     placeholder="(11) 98765-4321"
-                    className="w-full pl-10 pr-4 py-3.5 rounded-xl bg-[#1E293B] border border-[#334155] focus:border-[#0DC0E0] focus:ring-1 focus:ring-[#0DC0E0] text-white placeholder-[#64748B] text-sm font-inter transition-all outline-none"
+                    className="w-full pl-10 pr-4 py-3.5 rounded-xl bg-[#1E293B] border border-[#334155] focus:border-[#0DC0E0] focus:ring-1 focus:ring-[#0DC0E0] text-white placeholder-[#64748B] text-base sm:text-sm font-inter transition-all outline-none"
                   />
                 </div>
               </div>
@@ -190,10 +244,13 @@ export const DiagnosisFormSection: React.FC = () => {
                   <input
                     type="text"
                     required
+                    name="clinica"
+                    autoComplete="organization"
+                    enterKeyHint="send"
                     value={formData.clinica}
                     onChange={(e) => setFormData({ ...formData, clinica: e.target.value })}
                     placeholder="Ex: Instituto Dermatológico Costa"
-                    className="w-full pl-10 pr-4 py-3.5 rounded-xl bg-[#1E293B] border border-[#334155] focus:border-[#0DC0E0] focus:ring-1 focus:ring-[#0DC0E0] text-white placeholder-[#64748B] text-sm font-inter transition-all outline-none"
+                    className="w-full pl-10 pr-4 py-3.5 rounded-xl bg-[#1E293B] border border-[#334155] focus:border-[#0DC0E0] focus:ring-1 focus:ring-[#0DC0E0] text-white placeholder-[#64748B] text-base sm:text-sm font-inter transition-all outline-none"
                   />
                 </div>
               </div>
@@ -204,16 +261,12 @@ export const DiagnosisFormSection: React.FC = () => {
                   Faixa de faturamento mensal atual
                 </label>
                 <div className="grid grid-cols-3 gap-2">
-                  {[
-                    { id: '30k-80k', label: 'R$ 30k a 80k' },
-                    { id: '80k-250k', label: 'R$ 80k a 250k' },
-                    { id: '250k+', label: 'Acima de R$ 250k' },
-                  ].map((option) => (
+                  {FATURAMENTO_OPTIONS.map((option) => (
                     <button
                       type="button"
                       key={option.id}
                       onClick={() => setFormData({ ...formData, faturamento: option.id })}
-                      className={`py-2.5 px-2 rounded-lg text-xs font-medium border text-center transition-all cursor-pointer ${
+                      className={`min-h-[48px] py-2.5 px-2 rounded-lg text-xs font-medium border text-center transition-all cursor-pointer ${
                         formData.faturamento === option.id
                           ? 'bg-[#0DC0E0]/15 border-[#0DC0E0] text-[#0DC0E0]'
                           : 'bg-[#1E293B] border-[#334155] text-[#94A3B8] hover:border-slate-500'
@@ -244,12 +297,6 @@ export const DiagnosisFormSection: React.FC = () => {
                     </>
                   )}
                 </button>
-              </div>
-
-              {/* Anti-pitch note */}
-              <div className="pt-3 flex items-center justify-center gap-2 text-xs text-[#94A3B8] text-center font-inter">
-                <ShieldCheck className="w-4 h-4 text-[#10B981]" />
-                <span>Diagnóstico sem custo. Sem pitch de agência.</span>
               </div>
             </form>
           )}
