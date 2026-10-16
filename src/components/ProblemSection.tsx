@@ -275,17 +275,19 @@ export const ProblemSection: React.FC<ProblemSectionProps> = ({ onResolveClick }
         </div>
 
         {/* H2 Sora 42px */}
-        <h2 className="font-sora font-bold text-3xl sm:text-[42px] text-[#0F172A] tracking-tight leading-[1.2]">
-          O que segura o seu comercial{' '}
+        <h2 className="font-sora font-bold text-3xl sm:text-[38px] text-[#0F172A] tracking-tight leading-[1.2] text-balance">
+          Por que sua clínica não cresce na mesma proporção que você investe nela{' '}
           <span className="text-[#0AA9D1]">(e quase ninguém percebe)</span>
         </h2>
 
         {/* Abertura */}
         <p className="mt-5 text-base sm:text-lg text-[#64748B] font-inter max-w-2xl mx-auto leading-relaxed">
-          <strong className="font-semibold text-[#0F172A]">A sua clínica funciona.</strong> Mas quem
-          toca o negócio sente que podia render mais, e que falta controle sobre o que acontece no
-          meio do caminho. Quase sempre o freio está em problemas silenciosos, que a gente vive todo
-          dia mas nunca parou pra nomear.
+          <strong className="font-semibold text-[#0F172A]">
+            Você sabe que podia estar vendendo mais.
+          </strong>{' '}
+          O tráfego funciona, os leads chegam, mas o crescimento trava num ponto que ninguém
+          consegue explicar. Isso existe por conta de alguns{' '}
+          <em className="italic text-[#0F172A]">problemas comerciais ocultos.</em>
         </p>
       </div>
 

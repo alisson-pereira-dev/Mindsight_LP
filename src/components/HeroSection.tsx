@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import { ArrowUpRight, CheckCircle2, ShieldCheck, TrendingUp } from 'lucide-react';
 import bgIgor from '../bg_igor.jpg';
+import bgMobile from '../assets/hero-mobile.jpg';
 import gsap from 'gsap';
 
 interface HeroSectionProps {
@@ -75,12 +76,16 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onCtaClick }) => {
     >
       {/* Background photo: subject anchored to the right, copy sits on the dark left */}
       <div className="absolute inset-0 z-0">
-        <img
-          src={bgIgor}
-          alt=""
-          className="absolute inset-0 w-full h-full object-cover object-[72%_center] lg:object-right"
-          fetchPriority="high"
-        />
+        {/* Mobile (< lg): interior do spa. Desktop: foto do Igor. O navegador baixa só uma. */}
+        <picture>
+          <source media="(max-width: 1023px)" srcSet={bgMobile} />
+          <img
+            src={bgIgor}
+            alt=""
+            className="absolute inset-0 w-full h-full object-cover object-[62%_center] lg:object-right"
+            fetchPriority="high"
+          />
+        </picture>
         {/* Left-to-right fade for text legibility */}
         <div className="absolute inset-0 bg-gradient-to-r from-[#020617] via-[#020617]/85 to-[#020617]/10 max-lg:from-[#020617]/95 max-lg:via-[#020617]/80 max-lg:to-[#020617]/55" />
         {/* Top (navbar) and bottom (blend into next dark section) fades */}
@@ -108,9 +113,9 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onCtaClick }) => {
             ref={headlineRef}
             className="font-sora font-extrabold text-3xl sm:text-5xl lg:text-[52px] text-white tracking-tight leading-[1.12]"
           >
-            Atrair paciente a sua clínica já consegue.{' '}
+            Transformamos o volume de leads em{' '}
             <span className="relative inline-block text-transparent bg-clip-text bg-gradient-to-r from-[#0DC0E0] via-[#5CE1F5] to-[#0DC0E0]">
-              O que falta é transformar esse interesse em agenda cheia.
+              pacientes que compram consultas e fecham tratamentos.
             </span>
           </h1>
 
@@ -119,8 +124,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onCtaClick }) => {
             ref={subheadlineRef}
             className="mt-6 text-base sm:text-lg lg:text-[18px] text-[#CBD5E1] font-inter max-w-xl leading-relaxed"
           >
-            Você já investe, já tem paciente bom entrando todo mês. Mas o comercial ainda roda no
-            esforço e sem controle. E você sabe que dá pra ir além.
+            Sua clínica agendando mais e vendendo mais, com o mesmo investimento em marketing.
           </p>
 
           {/* Primary CTA */}

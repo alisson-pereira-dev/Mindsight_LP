@@ -7,6 +7,7 @@ import { HeroSection } from './components/HeroSection.tsx';
 import { ProblemSection } from './components/ProblemSection.tsx';
 import { LogicPainSection } from './components/LogicPainSection.tsx';
 import { SolutionSection } from './components/SolutionSection.tsx';
+import { LeakyBucketSection } from './components/LeakyBucketSection.tsx';
 import { QuoteSection } from './components/QuoteSection.tsx';
 import { DifferentiationSection } from './components/DifferentiationSection.tsx';
 import { StatsSection } from './components/StatsSection.tsx';
@@ -89,11 +90,14 @@ export default function App() {
         {/* 4. A SOLUÇÃO (Pinned Scrolltelling with 4 structural pillars) */}
         <SolutionSection onCtaClick={scrollToDiagnosis} />
 
-        {/* 4.5 CITAÇÃO (div intermediária: foto + frase de posicionamento) */}
-        <QuoteSection />
+        {/* 4.5 BALDE FURADO (imagem + copy dos furos do comercial) */}
+        <LeakyBucketSection onCtaClick={scrollToDiagnosis} />
 
         {/* 5. DIFERENCIAÇÃO (Anti-agency comparison matrix) */}
         <DifferentiationSection />
+
+        {/* 5.4 CITAÇÃO (foto do Igor + frase), logo acima da faixa de números */}
+        <QuoteSection />
 
         {/* 5.5 NÚMEROS (faixa em carrossel infinito, logo acima do formulário) */}
         <StatsSection />

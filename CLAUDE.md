@@ -44,7 +44,7 @@ src/*.jpg|png|mp4             # fotos e vídeos originais enviados pelo cliente 
 src/Mindsight-Company-System.html  # guia de design system / brand (consultar para cores e tokens)
 ```
 
-Ordem das seções em `App.tsx`: Hero (dark, foto) → Problema "O Diagnóstico Oculto" (light, carrossel de cards) → Dor lógica "A Conta Que Ninguém Faz" (card dark arredondado sobre fundo `#F8FAFC`) → Solução (scrolltelling pinado, 4 pilares) → Citação (card dark com foto do Igor) → Diferenciação → Números (faixa em marquee, `StatsSection`) → Diagnóstico (form, dark) → Footer (light). Cada seção que dispara conversão recebe `onCtaClick`/`onResolveClick` do `App`, que faz `scrollIntoView` em `#diagnostico`.
+Ordem das seções em `App.tsx`: Hero (dark, foto) → Problema "O Diagnóstico Oculto" (light, carrossel de cards) → Dor lógica "A Conta Que Ninguém Faz" (card dark arredondado sobre fundo `#F8FAFC`) → Solução (scrolltelling pinado, 4 pilares) → Balde furado (`LeakyBucketSection`, imagem + copy dos furos do comercial) → Diferenciação → Citação (card dark com foto do Igor) → Números (faixa em marquee, `StatsSection`) → Diagnóstico (form, dark) → Footer (light). Cada seção que dispara conversão recebe `onCtaClick`/`onResolveClick` do `App`, que faz `scrollIntoView` em `#diagnostico`.
 
 ## Convenções
 

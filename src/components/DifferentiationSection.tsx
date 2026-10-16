@@ -4,24 +4,29 @@ import { X, Check, ArrowRight, ShieldCheck, Zap } from 'lucide-react';
 export const DifferentiationSection: React.FC = () => {
   const comparisonItems = [
     {
-      agency: 'Entrega contatos avulsos e encerra a responsabilidade',
-      mindsight: 'Assume a conversão até o paciente sentar na cadeira',
+      topic: 'Especialização',
+      agency: 'Atende qualquer segmento, sem foco em clínicas nem em comercial',
+      mindsight: 'Especialista em comercial, dedicada ao nicho de clínicas',
     },
     {
-      agency: 'Culpa a secretária e a recepção se as vendas não sobem',
-      mindsight: 'Treina, padroniza scripts e audita o atendimento',
+      topic: 'Seleção de clientes',
+      agency: 'Aceita qualquer cliente que feche contrato',
+      mindsight: 'Seletiva, trabalha com quem tem fit para o método funcionar',
     },
     {
-      agency: 'Sugere dobrar o tráfego mesmo com o funil vazando',
-      mindsight: 'Corrige o vazamento para faturar mais com os mesmos leads',
+      topic: 'O que entrega',
+      agency: 'Contatos avulsos, sem acompanhar o que acontece depois',
+      mindsight: 'Estrutura, script e processo para o time comercial da clínica usar',
     },
     {
-      agency: 'Apresenta relatórios de impressões, CPC e cliques',
-      mindsight: 'Mede taxa de conversão, ticket médio e dinheiro no caixa',
+      topic: 'O que mede',
+      agency: 'Impressões, CPC, cliques',
+      mindsight: 'Taxa de conversão, ticket médio, dinheiro no caixa',
     },
     {
-      agency: 'Templates genéricos copiados de e-commerces e infoprodutos',
-      mindsight: 'Inteligência especializada em ética, compliance e saúde',
+      topic: 'Objetivo final',
+      agency: 'Gerar mais leads',
+      mindsight: 'Gerar mais venda, com os leads que a clínica já tem',
     },
   ];
 
@@ -35,9 +40,9 @@ export const DifferentiationSection: React.FC = () => {
               Posicionamento Imparcial
             </div>
 
-            <h2 className="font-sora font-extrabold text-3xl sm:text-4xl lg:text-[44px] text-[#0F172A] tracking-tight leading-[1.15]">
-              Por que a gente, e não{' '}
-              <span className="text-[#0AA9D1]">mais uma agência</span>
+            <h2 className="font-sora font-extrabold text-3xl sm:text-4xl lg:text-[40px] text-[#0F172A] tracking-tight leading-[1.15]">
+              A diferença entre <span className="text-[#0AA9D1]">gerar lead</span> e{' '}
+              <span className="text-[#0AA9D1]">gerar paciente</span> que fecha tratamento
             </h2>
 
             <div className="mt-6 space-y-4 text-base sm:text-lg text-[#64748B] font-inter leading-relaxed">
@@ -70,8 +75,9 @@ export const DifferentiationSection: React.FC = () => {
                   </h4>
                   <p className="mt-1 text-xs sm:text-sm text-[#475569] font-inter leading-relaxed">
                     Antes de qualquer proposta, tem uma consulta comercial: um diagnóstico do seu
-                    comercial pra entender se faz sentido pros dois lados. Se não fizer, a gente fala
-                    na sua cara.
+                    comercial pra entender se faz sentido pros dois lados. Se não fizer, nós te
+                    direcionamos com transparência e te indicamos o melhor caminho, mesmo que não
+                    seja conosco.
                   </p>
                 </div>
               </div>
@@ -120,21 +126,27 @@ export const DifferentiationSection: React.FC = () => {
               {/* Comparison Rows */}
               <div className="divide-y divide-[#E2E8F0]">
                 {comparisonItems.map((item, idx) => (
-                  <div key={idx} className="grid grid-cols-2 text-xs sm:text-sm">
-                    {/* Agency column */}
-                    <div className="p-4 sm:p-5 bg-white flex items-start gap-2.5 text-[#64748B] border-r border-[#E2E8F0]">
-                      <div className="w-5 h-5 rounded-full bg-[#F1F5F9] text-[#94A3B8] flex items-center justify-center shrink-0 mt-0.5">
-                        <X className="w-3.5 h-3.5 stroke-[2.5]" />
-                      </div>
-                      <span className="leading-snug">{item.agency}</span>
+                  <div key={idx} className="text-xs sm:text-sm">
+                    {/* Topic label */}
+                    <div className="px-4 sm:px-5 py-2 bg-[#F8FAFC] text-[10px] sm:text-[11px] font-semibold uppercase tracking-wider text-[#94A3B8] font-inter">
+                      {item.topic}
                     </div>
-
-                    {/* MindSight column */}
-                    <div className="p-4 sm:p-5 bg-white flex items-start gap-2.5 text-[#0F172A] font-medium">
-                      <div className="w-5 h-5 rounded-full bg-[#E6F9FC] text-[#0DC0E0] flex items-center justify-center shrink-0 mt-0.5 shadow-xs">
-                        <Check className="w-3.5 h-3.5 stroke-[2.5]" />
+                    <div className="grid grid-cols-2">
+                      {/* Agency column */}
+                      <div className="p-4 sm:p-5 bg-white flex items-start gap-2.5 text-[#64748B] border-r border-[#E2E8F0]">
+                        <div className="w-5 h-5 rounded-full bg-[#F1F5F9] text-[#94A3B8] flex items-center justify-center shrink-0 mt-0.5">
+                          <X className="w-3.5 h-3.5 stroke-[2.5]" />
+                        </div>
+                        <span className="leading-snug">{item.agency}</span>
                       </div>
-                      <span className="leading-snug">{item.mindsight}</span>
+
+                      {/* MindSight column */}
+                      <div className="p-4 sm:p-5 bg-white flex items-start gap-2.5 text-[#0F172A] font-medium">
+                        <div className="w-5 h-5 rounded-full bg-[#E6F9FC] text-[#0DC0E0] flex items-center justify-center shrink-0 mt-0.5 shadow-xs">
+                          <Check className="w-3.5 h-3.5 stroke-[2.5]" />
+                        </div>
+                        <span className="leading-snug">{item.mindsight}</span>
+                      </div>
                     </div>
                   </div>
                 ))}
@@ -142,7 +154,11 @@ export const DifferentiationSection: React.FC = () => {
 
               {/* Bottom bar summary */}
               <div className="p-4 bg-[#F8FAFC] border-t border-[#E2E8F0] text-center text-xs text-[#64748B] font-inter">
-                Resultado: <strong className="text-[#0F172A]">Taxa de conversão 2x a 3x superior</strong> sem precisar gastar um real a mais em anúncios.
+                Resultado:{' '}
+                <strong className="text-[#0F172A]">
+                  clínicas que estruturam o comercial aumentam a taxa de conversão em até 2x a 3x,
+                </strong>{' '}
+                sem precisar gastar um real a mais em anúncios.
               </div>
             </div>
           </div>
